@@ -202,9 +202,10 @@ class AsyncResult(ResultBase):
         """
         if self.ignored:
             return
-
-        if disable_sync_subtasks:
-            assert_will_not_block()
+        
+        # currently fails to propogate through redis backend
+        #if disable_sync_subtasks:
+        #    assert_will_not_block()
         _on_interval = promise()
         if follow_parents and propagate and self.parent:
             _on_interval = promise(self._maybe_reraise_parent_error, weak=True)
